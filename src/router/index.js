@@ -5,6 +5,10 @@ import SignUp from '../views/SignUp.vue'
 import Dashboard from '../views/Dashboard.vue'
 import Department from '../views/Department.vue'
 import Team from '../views/Team.vue'
+import EditEmployee from '../views/EditEmployee'
+import ViewEmployee from '../views/ViewEmployee'
+import EditDept from '../views/EditDept'
+import DeleteDept from '../views/DeleteDept'
 
 Vue.use(VueRouter)
 
@@ -33,6 +37,26 @@ const routes = [
     path: '/team',
     name: 'Team',
     component: Team
+  },
+  {
+    path: '/edit/:staff_id',
+    name: 'EditEmployee',
+    component: EditEmployee
+  },
+  {
+    path: '/view/:staff_id',
+    name: 'ViewEmployee',
+    component: ViewEmployee
+  },
+  {
+    path: '/editdept/:dept_id',
+    name: 'EditDept',
+    component: EditDept
+  },
+  {
+    path: '/deletedept/:dept_id',
+    name: 'DeleteDept',
+    component: DeleteDept
   },
 ]
 

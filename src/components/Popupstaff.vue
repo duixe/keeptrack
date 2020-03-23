@@ -166,10 +166,33 @@ export default {
             date: format(parseISO(this.date), 'do MMM yyyy')
           }
 
-          db.collection('departments').doc(`${this.department}`).collection('employees').add(employee).then(() => {
-            this.loading = false
-            this.$emit('employeeAdded')
+          db.collection('departments').get()
+          .then(querySnapshot => {
+              querySnapshot.forEach(doc => {
+                if(doc.data().name == employee.department) {
+                  db.collection('departments').doc(`${doc.id}`).collection('employees').add(employee).then(() => {
+                    console.log(this.img_url);
+
+                    
+                  }).catch(err => {
+                    console.log("error: ", err);
+                    
+                  })
+                 
+                  
+                  
+                }
+                
+                
+                this.loading = false
+                this.$emit('employeeAdded')
+              })
           })
+
+          // db.collection('departments').doc(`${this.department}`).collection('employees').add(employee).then(() => {
+          //   this.loading = false
+          //   this.$emit('employeeAdded')
+          // })
 
 
           setTimeout(() => {
@@ -186,7 +209,6 @@ export default {
         }
       },
       uploadImage() {
-      
         let storageRef = fb.storage().ref('profile_pic/'+this.file.name)
         
         let uploadTask = storageRef.put(this.file)
@@ -204,6 +226,8 @@ export default {
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
             uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
               this.img_url = downloadURL
+              
+              
             });
           });
 
@@ -211,7 +235,7 @@ export default {
         
 
         
-      }
+       }
     },
     computed: {
       computedDate() {
@@ -223,6 +247,7 @@ export default {
         querySnapshot.forEach((doc) => this.items.push( doc.data().name ))
       })
     }
+  
 
 }
 </script>

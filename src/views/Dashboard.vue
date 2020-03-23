@@ -53,7 +53,7 @@
                 </v-tooltip>
             </v-row>
             <v-card flat v-for="depDetail in depDetails" :key="depDetail.name">
-                <v-row :class="`pa-3 dash-class ${depDetail.status}`"
+                <v-row :class="`pa-3 dash-class ${depDetail.isActive}`"
                 style="margin-left: 0"
                 >
                     <v-col xs="12" md="6">
@@ -70,7 +70,7 @@
                     </v-col>
                     <v-col xs="2" sm="4" md="2">
                         <div align="right">
-                            <v-chip :class="`${depDetail.status} white--text caption my-2`">{{ depDetail.status }}</v-chip>
+                            <v-chip :class="`${depDetail.isActive} white--text caption my-2`">{{ depDetail.isActive == "true" ? 'active' : 'not active' }}</v-chip>
                         </div>
                     </v-col>
                 </v-row>
@@ -117,23 +117,24 @@ export default {
     .dashboard {
         width: 100%;
         min-height: 100%;
+        overflow-x: hidden;
         background: #F5F5F5;
 
     }
 
-    .dash-class.not-active{
+    .dash-class.false{
         border-left: 4px solid #2C9DAE;
     }
 
-    .dash-class.active {
+    .dash-class.true {
         border-left: 4px solid #051937;
     }
 
-    .v-chip.not-active{
+    .v-chip.false{
         background: #2C9DAE !important;
     }
 
-    .v-chip.active {
+    .v-chip.true {
         background: #051937 !important;
     }
 </style>

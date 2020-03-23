@@ -1,9 +1,9 @@
 <template>
     <nav>
         <v-toolbar app dark class="indigo">
-            <v-app-bar-nav-icon class="grey--text" @click="toggleDrawer = !toggleDrawer"></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon class="" @click="toggleDrawer = !toggleDrawer"></v-app-bar-nav-icon>
             <router-link to="/" class="brand-logo">
-                <v-toolbar-title class="text-uppercase grey--text">
+                <v-toolbar-title class="text-uppercase" color="white">
                     <span class="font-weight-light">keep</span>
                     <span>Track</span>
                 </v-toolbar-title>
@@ -90,3 +90,9 @@
         }
     }
 </script>
+<style lang="css" scoped>
+    a {
+        text-decoration: none !important;
+        color: inherit !important;
+    }
+</style>

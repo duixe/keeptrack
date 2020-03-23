@@ -131,7 +131,7 @@ export default {
             date: format(parseISO(this.date), 'do MMM yyyy')
           }
 
-          db.collection('departments').doc(`${this.name}`).set(department).then(() => {
+          db.collection('departments').doc().set(department).then(() => {
             this.loading = false
             this.$emit('departmentAdded')
           })
