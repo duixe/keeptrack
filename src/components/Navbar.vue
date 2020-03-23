@@ -1,7 +1,7 @@
 <template>
     <nav>
         <v-toolbar app dark class="indigo">
-            <v-app-bar-nav-icon class="" @click="toggleDrawer = !toggleDrawer"></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon v-if="isLoggedIn" class="" @click="toggleDrawer = !toggleDrawer"></v-app-bar-nav-icon>
             <router-link to="/" class="brand-logo">
                 <v-toolbar-title class="text-uppercase" color="white">
                     <span class="font-weight-light">keep</span>
@@ -9,14 +9,15 @@
                 </v-toolbar-title>
             </router-link>
             <v-spacer></v-spacer>
-            <v-btn text class="mr-2">
-                <span dark>Log In</span>
+            <v-btn v-if="isLoggedIn" text class="mr-2" @click="logout">
+                <span dark>Log out</span>
                 <v-icon right>mdi-exit-to-app</v-icon>
             </v-btn>
-            <v-btn icon>
-                <v-icon>mdi-account-circle</v-icon>
+            <v-btn v-if="isLoggedIn" icon>
+                <v-icon>dashboard</v-icon>
             </v-btn>
             <v-menu 
+            v-if="!isLoggedIn"
             offset-y
             origin="center center"
             transition="scale-transition"
@@ -38,7 +39,7 @@
                 </v-list>
             </v-menu>
         </v-toolbar>
-        <v-navigation-drawer v-model="toggleDrawer" 
+        <v-navigation-drawer v-if="isLoggedIn" v-model="toggleDrawer" 
         app 
         temporary
         >
@@ -70,14 +71,14 @@
     </nav>
 </template>
 <script>
+import {fb} from '@/firebase'
     export default {
-
         data() {
             return {
                 goHome: "/",
                 items: [
-                    { title: 'Sign up', key: "signup", route: "/signup" },
-                    { title: 'home', key: "signup", route: "/" },
+                    { title: 'Log In', key: "login", route: "/login" },
+                    { title: 'Sign Up', key: "signup", route: "/register" },
                     
                 ],
                 drawItems: [
@@ -86,8 +87,23 @@
                     { icon: 'mdi-account-box', text: 'Staff', route: '/team' },
                 ],
                 toggleDrawer: false,
+                isLoggedIn: false,
+                currentUser: false
             }
-        }
+        },
+        created() {
+            if (fb.auth().currentUser) {
+                this.isLoggedIn = true
+                this.currentUser = fb.auth().currentUser.email
+            }
+        },
+        methods: {
+            logout() {
+                fb.auth().signOut().then(() => {
+                    this.$router.go({ path: this.$router.path})
+                })
+            }
+        } 
     }
 </script>
 <style lang="css" scoped>
