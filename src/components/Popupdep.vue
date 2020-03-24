@@ -120,6 +120,13 @@ export default {
         loading: false
       }
     },
+    watch: {
+      replaceReg() {
+        const char = '/'
+        return this.name.replace(char, '&')
+        
+      }
+    },
     methods: {
       submit() {
         if (this.$refs.form.validate()) {
@@ -160,6 +167,7 @@ export default {
       computedDate() {
         return this.date ? format(parseISO(this.date),  'do MMM yyyy') : ''
       },
+      
     },
     created() {
       // db.collection('departments').doc('fUT2YgRjF27uBXdarABB').collection('employees').get().then((querySnapshot) => {

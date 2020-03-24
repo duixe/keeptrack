@@ -1,5 +1,20 @@
 <template>
   <div class="about">
+    <v-snackbar
+            v-model="snackbar"
+            :timeout="4000"
+            top
+            color="success"
+         >
+            <span>{{ msg }} </span>
+            <v-btn
+            dark
+            text
+            @click="snackbar = false"
+            >
+            Close
+            </v-btn>
+        </v-snackbar>
      <v-container
         class="fill-height"
         fluid
@@ -69,7 +84,7 @@
               <v-card-actions>
                 <v-spacer />
                 <v-btn color="primary" router :to="goHome">Cancel</v-btn>
-                <v-btn color="primary" @click="register">Sign UP</v-btn>
+                <v-btn color="primary" @click="register" :loading="loading">Sign UP</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -103,12 +118,15 @@ export default {
             ],
             file: null,
             img_url:  null,
-            goHome: "/"
+            goHome: "/",
+            snackbar: false,
+            msg: "",
+            loading: false
         }
     },
     methods: {
            register() {
-              
+                    this.loading = true
                    fb.auth().createUserWithEmailAndPassword(this.email, this.password)
                    .then(user => {
                      console.log(user.user.uid)
@@ -121,20 +139,26 @@ export default {
                        
                     
                    }).then(() => {
+                     this.snackbar = true
+                     this.msg = "Account Created successfully"
                      console.log("user_doc successfully created") 
+                     this.loading = false
                      this.$router.go({ path: this.$router.path})
                      })
                    .catch(err => {
                        let errCode = err.code
                        let errMessage = err.message
-
+                        this.loading = false
                        if (errCode == 'auth/weak-password') {
-                          console.log("password is to weak");
+                         this.snackbar = true
+                         this.msg = "password is to weak"
                            
                        }else if(errCode == 'auth/email-already-in-use') {
-                           alert("email already in use")
+                         this.snackbar = true
+                         this.msg = "email already in use"
                        }else {
-                           console.log(errMessage);
+                          this.snackbar = true
+                          this.msg = errMessage
                        }
                        console.log(err);
                    }) 

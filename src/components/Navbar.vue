@@ -89,7 +89,7 @@ import {fb, db} from '@/firebase'
                 toggleDrawer: false,
                 isLoggedIn: false,
                 currentUser: false,
-                admin_pic: null,
+                admin_pic: "",
                 admin_email: null,
                 admin_username: null
             }
@@ -105,7 +105,7 @@ import {fb, db} from '@/firebase'
                 .then(querySnapshot => {
                     querySnapshot.forEach(doc => {
                         if (doc.id == user.uid) {
-                            this.admin_pic = doc.data().profile_pic
+                            this.admin_pic = doc.data().admin_pic
                             this.admin_username = doc.data().username
                             this.admin_email = user.email
                             
