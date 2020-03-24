@@ -102,7 +102,7 @@
 </template>
 <script>
 import Popupstaff from '@/components/Popupstaff'
-import {db} from '@/firebase'
+import {db, fb} from '@/firebase'
 export default {
     name: "Team",
     components: { Popupstaff },
@@ -131,20 +131,54 @@ export default {
         }
     },
     created() {
-            db.collectionGroup('employees').onSnapshot(res => {
-                const changes = res.docChanges()
+            const user = fb.auth().currentUser;
 
-                changes.forEach(change => {
-                    if(change.type === 'added') {
-                        this.staff.push({
-                            ...change.doc.data(), 
-                            id:change.doc.id
+            let docQuery = db.collection('clients').doc(user.uid).collection("departments")
+           
+             docQuery.get().then(querySnapshot => {
+                querySnapshot.forEach(doc => {
+                    doc.ref.collection('employees').onSnapshot(res => {
+                        const changes = res.docChanges()
+                            changes.forEach(change => {
+                                if(change.type === 'added') {
+                                    this.staff.push({
+                                        ...change.doc.data(), 
+                                        id:change.doc.id
+                                    })
+                                }
+                            })   
+                        
                         })
-                    }
+                     
+                    })
+                 
                 })
+            // db.collection('employees').onSnapshot(res => {
+            //     const changes = res.docChanges()
+            //         changes.forEach(change => {
+            //             if(change.type === 'added') {
+            //                 this.staff.push({
+            //                     ...change.doc.data(), 
+            //                     id:change.doc.id
+            //                 })
+            //             }
+            //         })   
                 
+            //     })
+
+                // db.collectionGroup('employees').onSnapshot(res => {
+                // const changes = res.docChanges()
+
+                //     changes.forEach(change => {
+                //         if(change.type === 'added') {
+                //             this.staff.push({
+                //                 ...change.doc.data(), 
+                //                 id:change.doc.id
+                //             })
+                //         }
+                //     })   
                 
-            })
+                // })
 
             // let query = db.collectionGroup('employees')
             //     query.get().then((querySnapshot) => {

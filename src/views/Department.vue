@@ -120,7 +120,7 @@
 </template>
 <script>
  import Popupdep from '@/components/Popupdep'
- import {db} from '@/firebase'
+ import {db, fb} from '@/firebase'
     export default {
         components: { Popupdep },
         data() {
@@ -136,7 +136,9 @@
             }
         },
         created() {
-            db.collection('departments').onSnapshot(res => {
+            const user = fb.auth().currentUser
+            // new created client
+            db.collection('clients').doc(user.uid).collection("departments").onSnapshot(res => {
                 const changes = res.docChanges()
 
                 changes.forEach(change => {
@@ -146,9 +148,23 @@
                         })
                     }
                 })
+            })
+
+
+
+            // db.collection('departments').onSnapshot(res => {
+            //     const changes = res.docChanges()
+
+            //     changes.forEach(change => {
+            //         if(change.type === 'added') {
+            //             this.department.push({
+            //                 ...change.doc.data()
+            //             })
+            //         }
+            //     })
                 
                 
-            });
+            // });
 
             
 

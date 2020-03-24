@@ -102,7 +102,7 @@
 <script>
 import format from 'date-fns/format'
 import parseISO from 'date-fns/parseISO'
-import {db} from '@/firebase'
+import {db, fb} from '@/firebase'
 export default {
     data() {
       return {
@@ -162,18 +162,18 @@ export default {
       updateDept() {
         if (this.$refs.form.validate()) {
           this.loading = true
-          const employee = {
+          const dept = {
             name: this.name,
             status: this.status,
             description: this.description,
             date: format(parseISO(this.date), 'do MMM yyyy')
           }
-
-         db.collection('departments').get()
+         const user = fb.auth().currentUser;
+         db.collection('clients').doc(user.uid).collection('departments').get()
             .then(querySnapshot => {
                 querySnapshot.forEach(doc => {
                     if(doc.data().name == this.$route.params.dept_id) {
-                        doc.ref.update(employee)
+                        doc.ref.update(dept)
                         this.snackbar = true
                         
                         

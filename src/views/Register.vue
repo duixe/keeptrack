@@ -24,14 +24,14 @@
               </v-toolbar>
               <v-card-text>
                 <v-form ref="form">
-                  <!-- <v-text-field
+                  <v-text-field
                     label="username"
                     prepend-icon="person"
                     type="text"
-                    v-model="name"
+                    v-model="username"
                     :rules="nameRules"
                     required
-                  /> -->
+                  />
 
                   <v-text-field
                     id="email"
@@ -54,16 +54,16 @@
                     @click:append="show = !show"
                     prepend-icon="lock"
                    ></v-text-field>
-                  <!-- <v-file-input
+                  <v-file-input
                     :rules="fileRules"
                     @change="uploadImage"
                     v-model="file"
                     ref="upLoadval"
                     accept="image/png, image/jpeg, image/jpg, image/bmp"
-                    placeholder="Pick an profile image"
+                    placeholder="Pick a profile image"
                     prepend-icon="mdi-camera"
                     label="Profile image"
-                ></v-file-input> -->
+                ></v-file-input>
                 </v-form>
               </v-card-text>
               <v-card-actions>
@@ -78,15 +78,15 @@
   </div>
 </template>
 <script>
-import {fb} from '@/firebase'
+import {fb, db} from '@/firebase'
 export default {
     data() {
         return {
-            // name: "",
-            // nameRules: [
-            //     v => !!v || 'Name is required',
-            //     v => (v && v.length <= 100) || 'Name must be less than 100 characters',
-            // ],
+            username: "",
+            nameRules: [
+                v => !!v || 'Name is required',
+                v => (v && v.length <= 100) || 'Name must be less than 100 characters',
+            ],
             email: '',
             emailRules: [
                 v => !!v || 'E-mail is required',
@@ -98,9 +98,11 @@ export default {
                 required: value => !!value || 'Required.',
                 min: v => v.length >= 8 || 'Min 8 characters',
             },
-            // fileRules: [
-            //     value => !value || value.size < 2000000 || 'Image size should be less than 2 MB!',
-            // ],
+            fileRules: [
+                value => !value || value.size < 2000000 || 'Image size should be less than 2 MB!',
+            ],
+            file: null,
+            img_url:  null,
             goHome: "/"
         }
     },
@@ -109,10 +111,20 @@ export default {
               
                    fb.auth().createUserWithEmailAndPassword(this.email, this.password)
                    .then(user => {
-                    //    console.log("user created succcessfully")
-                       console.log(user)  
-                       this.$router.go({ path: this.$router.path})
-                   }).catch(err => {
+                     console.log(user.user.uid)
+                     
+                     return db.collection('clients').doc(user.user.uid).set({
+                           username: this.username,
+                           admin_pic: this.img_url
+
+                       })
+                       
+                    
+                   }).then(() => {
+                     console.log("user_doc successfully created") 
+                     this.$router.go({ path: this.$router.path})
+                     })
+                   .catch(err => {
                        let errCode = err.code
                        let errMessage = err.message
 
@@ -125,12 +137,34 @@ export default {
                            console.log(errMessage);
                        }
                        console.log(err);
-                       
-                   })
-                   
-               
+                   }) 
+
             
-           }  
+            },
+            uploadImage() {
+                let storageRef = fb.storage().ref('admin_pic/'+this.file.name)
+                
+                let uploadTask = storageRef.put(this.file)
+
+                uploadTask.on('state_changed', (snapshot) => {
+                console.log(snapshot);
+                
+                
+                }, (error) => {
+                    // Handle unsuccessful uploads
+                    console.log(error);
+                    
+                }, () => {
+                    // Handle successful uploads on complete
+                    // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+                    uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+                    this.img_url = downloadURL
+                    
+                    
+                    });
+                });
+        
+            }
            
         }
 }

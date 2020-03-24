@@ -45,11 +45,11 @@
         >
             <v-list-item class="mt-8 mb-6">
                 <v-list-item-avatar>
-                  <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+                  <v-img :src="admin_pic"></v-img>
                 </v-list-item-avatar>
                 <v-list-item-content>
-                  <v-list-item-title>John Leider</v-list-item-title>
-                  <v-list-item-subtitle>Admin</v-list-item-subtitle>
+                  <v-list-item-title>@{{ admin_username}}</v-list-item-title>
+                  <v-list-item-subtitle>{{ admin_email }}</v-list-item-subtitle>
                 </v-list-item-content>
             </v-list-item>
             <v-divider></v-divider>
@@ -71,7 +71,7 @@
     </nav>
 </template>
 <script>
-import {fb} from '@/firebase'
+import {fb, db} from '@/firebase'
     export default {
         data() {
             return {
@@ -88,13 +88,30 @@ import {fb} from '@/firebase'
                 ],
                 toggleDrawer: false,
                 isLoggedIn: false,
-                currentUser: false
+                currentUser: false,
+                admin_pic: null,
+                admin_email: null,
+                admin_username: null
             }
         },
         created() {
             if (fb.auth().currentUser) {
+                const user = fb.auth().currentUser
                 this.isLoggedIn = true
                 this.currentUser = fb.auth().currentUser.email
+
+
+                db.collection('clients').get()
+                .then(querySnapshot => {
+                    querySnapshot.forEach(doc => {
+                        if (doc.id == user.uid) {
+                            this.admin_pic = doc.data().profile_pic
+                            this.admin_username = doc.data().username
+                            this.admin_email = user.email
+                            
+                        }
+                    })
+                })
             }
         },
         methods: {

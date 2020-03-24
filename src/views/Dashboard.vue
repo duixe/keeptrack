@@ -80,7 +80,7 @@
     </div>
 </template>
 <script>
-import {db} from '@/firebase'
+import {db, fb} from '@/firebase'
 export default {
     data() {
         return {
@@ -99,7 +99,8 @@ export default {
         }
     },
     created() {
-        db.collection('departments').onSnapshot(res => {
+        const user = fb.auth().currentUser
+        db.collection('clients').doc(user.uid).collection('departments').onSnapshot(res => {
             const changes = res.docChanges()
 
             changes.forEach(change => {

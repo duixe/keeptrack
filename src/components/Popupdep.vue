@@ -102,7 +102,7 @@
 <script>
 import format from 'date-fns/format'
 import parseISO from 'date-fns/parseISO'
-import {db} from '@/firebase'
+import {db, fb} from '@/firebase'
 export default {
     data() {
       return {
@@ -130,11 +130,19 @@ export default {
             isActive: this.status,
             date: format(parseISO(this.date), 'do MMM yyyy')
           }
-
-          db.collection('departments').doc().set(department).then(() => {
+          // new code 👇
+          const user = fb.auth().currentUser;
+          db.collection('clients').doc(user.uid).collection('departments').doc().set(department).then(() => {
             this.loading = false
             this.$emit('departmentAdded')
           })
+
+
+          // old code 
+          // db.collection('departments').doc().set(department).then(() => {
+          //   this.loading = false
+          //   this.$emit('departmentAdded')
+          // })
 
 
           setTimeout(() => {

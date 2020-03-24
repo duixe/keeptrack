@@ -85,7 +85,7 @@ export default {
       login() {
           fb.auth().signInWithEmailAndPassword(this.email, this.password)
             .then(user => {
-                console.log(`you are logged as ${user.email}`)  
+                console.log(user.user.uid)  
                 this.$router.go({ path: this.$router.path})
             }).catch(err => {
                 console.log(err.message);

@@ -16,5 +16,6 @@ fb.auth().onAuthStateChanged(user => {
       render: h => h(App)
     }).$mount('#app')
   }
+  console.log(user.id)
 })
 

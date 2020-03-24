@@ -166,28 +166,47 @@ export default {
             date: format(parseISO(this.date), 'do MMM yyyy')
           }
 
-          db.collection('departments').get()
+          // New Code 👇
+          const user = fb.auth().currentUser;
+          db.collection('clients').doc(user.uid).collection('departments').get()
           .then(querySnapshot => {
-              querySnapshot.forEach(doc => {
-                if(doc.data().name == employee.department) {
-                  db.collection('departments').doc(`${doc.id}`).collection('employees').add(employee).then(() => {
-                    console.log(this.img_url);
+            querySnapshot.forEach(doc => {
+              if (doc.data().name == employee.department) {
+                db.collection('clients').doc(user.uid).collection('departments').doc(`${doc.id}`).collection('employees').add(employee)
+                .then(() => {
+                  console.log(this.img_url);
+                }).catch(err => {
+                  console.log("error: ", err);
+                })
+              }
+              this.loading = false
+              this.$emit('employeeAdded')
+            })
+          })
+
+          // old code 👇
+          // db.collection('departments').get()
+          // .then(querySnapshot => {
+          //     querySnapshot.forEach(doc => {
+          //       if(doc.data().name == employee.department) {
+          //         db.collection('departments').doc(`${doc.id}`).collection('employees').add(employee).then(() => {
+          //           console.log(this.img_url);
 
                     
-                  }).catch(err => {
-                    console.log("error: ", err);
+          //         }).catch(err => {
+          //           console.log("error: ", err);
                     
-                  })
+          //         })
                  
                   
                   
-                }
+          //       }
                 
                 
-                this.loading = false
-                this.$emit('employeeAdded')
-              })
-          })
+          //       this.loading = false
+          //       this.$emit('employeeAdded')
+          //     })
+          // })
 
           // db.collection('departments').doc(`${this.department}`).collection('employees').add(employee).then(() => {
           //   this.loading = false
@@ -230,10 +249,6 @@ export default {
               
             });
           });
-
-        
-        
-
         
        }
     },
@@ -243,7 +258,8 @@ export default {
       },
     },
     created() {
-      db.collection('departments').get().then((querySnapshot) => {
+      const user = fb.auth().currentUser;
+      db.collection('clients').doc(user.uid).collection('departments').get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => this.items.push( doc.data().name ))
       })
     }
