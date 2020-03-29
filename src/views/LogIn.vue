@@ -140,6 +140,7 @@ export default {
             .then(() => {
                 this.$router.go({ path: this.$router.path})
                 this.loading = false
+                this.dialog = false
             }).catch(err => {
                 console.log(err.message);
                 this.msg = err.message
@@ -156,9 +157,13 @@ export default {
 
         auth.sendPasswordResetEmail(this.emailres).then(() => {
           console.log("email sent");
-          
+          this.msg = "A reset password link has been sent to your email"
+          this.snackbar = true
+
         }).catch(err => {
           console.log(err);
+          this.msg = err.message
+          this.snackbar = true
           
         })
 

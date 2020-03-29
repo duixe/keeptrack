@@ -41,7 +41,7 @@
     <v-card-title>Contact</v-card-title>
 
     <v-card-text>
-      <div><a :href="'mailto:'+email">{{ email }}</a></div>
+      <div class="sendmail"><a :href="'mailto:'+email">{{ email }}</a></div>
     </v-card-text>
     <v-divider></v-divider>
 
@@ -170,3 +170,16 @@ export default {
     }
 }
 </script>
+<style lang="css" scoped>
+  .sendmail a {
+    padding: .5rem;
+    text-decoration: none;
+    transition: all .3s ease-in-out
+  }
+
+  .sendmail a:hover {
+    background-color: #2C3F5A;
+    color: #fff;
+    border-radius: 2px;
+  }
+</style>
