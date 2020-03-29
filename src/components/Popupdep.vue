@@ -13,7 +13,7 @@
           large
           bottom
           right
-          color="primary"
+          class="secondarylight"
           style="right: 20em"
           >
           <v-icon>mdi-plus</v-icon>

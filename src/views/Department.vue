@@ -17,7 +17,8 @@
         </v-snackbar>
         <v-container-fluid pl="10">
             <v-row style="position: relative;
-             background-image: linear-gradient(to right top, #051937, #043758, #015778, #0e7995, #2c9dae);"
+             background-image: linear-gradient(to right top, #051937, #043758, #015778, #0e7995, #2c9dae)"
+             class="dashbg"
             >
 
             <v-col cols="12" sm="8" offset-md="2" md="4">
@@ -132,7 +133,8 @@
                     // {name: 'Software Development', numofStaff: '24', date: '12th Feb, 2017', status: 'active', content: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut'}   
                 ],
                 departmentStaff: [],
-                snackbar: false
+                snackbar: false,
+                dashbg: "../assets/back1.jpg"
             }
         },
         created() {
@@ -191,5 +193,7 @@
         text-decoration: none !important;
         color: inherit !important;
     }
+    
+    
 
 </style>

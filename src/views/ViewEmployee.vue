@@ -41,7 +41,7 @@
     <v-card-title>Contact</v-card-title>
 
     <v-card-text>
-      <div>{{ email }}</div>
+      <div><a :href="'mailto:'+email">{{ email }}</a></div>
     </v-card-text>
     <v-divider></v-divider>
 

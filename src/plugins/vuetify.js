@@ -5,7 +5,15 @@ Vue.use(Vuetify);
 
 export default new Vuetify({
     theme: {
-        duixe: "#051937",
-        duixePrimary: "#2C9DAE"
+        themes: {
+            light: {
+                primary: '#2C9DAE',
+                secondary: "#2C3F5A",
+                secondarylight: "#2C3E59",
+                duixe: "#2C3F5A",
+                duixePrimary: "#0D203B"
+            }
+        }
+    
     }
 });

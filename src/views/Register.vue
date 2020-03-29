@@ -18,6 +18,7 @@
      <v-container
         class="fill-height"
         fluid
+        style="margin-top: 5.9rem"
       >
         <v-row
           align="center"
@@ -30,7 +31,7 @@
           >
             <v-card class="elevation-12">
               <v-toolbar
-                color="primary"
+                class="secondarylight"
                 dark
                 flat
 
@@ -38,7 +39,7 @@
                 <v-toolbar-title>Sign Up</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
-                <v-form ref="form">
+                <v-form ref="registerform">
                   <v-text-field
                     label="username"
                     prepend-icon="person"
@@ -83,8 +84,8 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer />
-                <v-btn color="primary" router :to="goHome">Cancel</v-btn>
-                <v-btn color="primary" @click="register" :loading="loading">Sign UP</v-btn>
+                <v-btn dark class="primary" router :to="goHome">Cancel</v-btn>
+                <v-btn dark class="secondarylight" @click="register" :loading="loading">Sign UP</v-btn>
               </v-card-actions>
             </v-card>
           </v-col>
@@ -126,6 +127,7 @@ export default {
     },
     methods: {
            register() {
+                  if (this.$refs.registerform.validate()) {
                     this.loading = true
                    fb.auth().createUserWithEmailAndPassword(this.email, this.password)
                    .then(user => {
@@ -141,7 +143,7 @@ export default {
                    }).then(() => {
                      this.snackbar = true
                      this.msg = "Account Created successfully"
-                     console.log("user_doc successfully created") 
+                    //  console.log("user_doc successfully created") 
                      this.loading = false
                      this.$router.go({ path: this.$router.path})
                      })
@@ -163,6 +165,8 @@ export default {
                        console.log(err);
                    }) 
 
+                  }
+                   
             
             },
             uploadImage() {

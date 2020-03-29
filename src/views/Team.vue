@@ -95,7 +95,7 @@
                 </v-col>
             </v-row>
             <v-row v-else>
-                <h1>oops no employee added</h1>
+                <h1> no employee added</h1>
             </v-row>
         </v-container>
     </div>

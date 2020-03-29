@@ -62,7 +62,7 @@
                     </v-col>
                     <v-col xs="6" sm="4" md="2">
                         <div class="caption grey--text">Total num of staff</div>
-                        <div>{{ depDetail.numofStaff }}</div>
+                        <div>{{ depDetail.staffNum }}</div>
                     </v-col>
                         <v-col xs="6" sm="4" md="2">
                         <div class="caption grey--text">Date Created</div>
@@ -90,7 +90,7 @@ export default {
                 // {name: 'UI/UX Department', numofStaff: '3', date: '12th Feb, 2016', status: 'not-active'},
                 // {name: 'Software Development', numofStaff: '24', date: '12th Feb, 2017', status: 'active'} 
 
-            ]
+            ],
         }
     },
     methods: {
@@ -105,12 +105,51 @@ export default {
 
             changes.forEach(change => {
                 if(change.type === 'added') {
-                    this.depDetails.push({
-                        ...change.doc.data()
+                    // this.depDetails.push({
+                    //     ...change.doc.data()
+                    // })
+                    change.doc.ref.collection('employees').get().then(querySnapshot => {
+                        let n = 0
+                        querySnapshot.forEach(doc => {
+                            n++
+                            console.log(doc.id);
+                            
+                        })
+                        console.log(n);
+                        this.depDetails.push({
+                        ...change.doc.data(),
+                        staffNum: n
                     })
+                        
+                    })
+                     
                 }
             })
+            console.log(this.depDetails.staffNum);
+            
         })
+
+        // let docQuery = db.collection('clients').doc(user.uid).collection("departments")
+           
+        //      docQuery.get().then(querySnapshot => {
+        //         querySnapshot.forEach(doc => {
+        //             doc.ref.collection('employees').onSnapshot(res => {
+        //                 const changes = res.docChanges()
+        //                     changes.forEach(change => {
+        //                         if(change.type === 'added') {
+        //                             this.staffNum.push({
+        //                                 ...change.doc.data(), 
+        //                                 id:change.doc.id
+        //                             })
+        //                         }
+        //                     })   
+                            
+        //                 })
+                     
+        //             })
+                 
+        //         })
+
     }
 }
 </script>

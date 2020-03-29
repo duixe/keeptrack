@@ -17,7 +17,7 @@
         </v-snackbar>
      <v-container
         class="fill-height pt-6"
-        style="margin-top: 6.7rem"
+        style="margin-top: 6.2rem"
         fluid
       >
         <v-row
@@ -26,19 +26,20 @@
         >
           <v-col
             cols="12"
-            sm="8"
+            xs="12"
+            sm="11"
             md="4"
           >
             <v-card class="elevation-12 pb-2">
               <v-toolbar
-                color="secondary"
+                class="secondarylight"
                 dark
                 flat
               >
                 <v-toolbar-title>Sign In</v-toolbar-title>
               </v-toolbar>
               <v-card-text>
-                <v-form>
+                <v-form ref="loginform">
                  <v-text-field
                     id="email"
                     label="email"
@@ -63,7 +64,7 @@
                 </v-form>
               </v-card-text>
               <v-card-actions class="d-flex justify-center">
-                <v-btn color="primary" @click="login" :loading="loading">Login</v-btn>
+                <v-btn dark class="secondarylight" @click="login" :loading="loading">Login</v-btn>
               </v-card-actions>
               <v-divider></v-divider>
               <p class="text-center ma-3">
@@ -132,6 +133,8 @@ export default {
     },
     methods: {
       login() {
+        if (this.$refs.loginform.validate()) {
+
           this.loading = true
           fb.auth().signInWithEmailAndPassword(this.email, this.password)
             .then(() => {
@@ -143,6 +146,9 @@ export default {
                 this.snackbar = true
                 this.loading = false
             })
+          
+        }
+          
             
       },
       resetPass() {

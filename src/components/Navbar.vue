@@ -1,11 +1,11 @@
 <template>
     <nav>
-        <v-toolbar app dark class="indigo">
+        <v-app-bar fixed app dark class="secondary px-xl-10 px-lg-9 px-md-6">
             <v-app-bar-nav-icon v-if="isLoggedIn" class="" @click="toggleDrawer = !toggleDrawer"></v-app-bar-nav-icon>
             <router-link to="/" class="brand-logo">
-                <v-toolbar-title class="text-uppercase" color="white">
+                <v-toolbar-title class="text-capitalize" color="white">
                     <span class="font-weight-light">keep</span>
-                    <span>Track</span>
+                    <span style="font-family: font-family: 'Baloo 2', cursive !important; font-weight: 600;">Track</span>
                 </v-toolbar-title>
             </router-link>
             <v-spacer></v-spacer>
@@ -38,10 +38,13 @@
                     </v-list-item>
                 </v-list>
             </v-menu>
-        </v-toolbar>
+        </v-app-bar>
         <v-navigation-drawer v-if="isLoggedIn" v-model="toggleDrawer" 
         app 
         temporary
+        dark
+        class="primary"
+        style="background-image: linear-gradient(to right top, #051937, #043758, #015778, #0e7995, #2c9dae)"
         >
             <v-list-item class="mt-8 mb-6">
                 <v-list-item-avatar>
