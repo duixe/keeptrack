@@ -61,7 +61,7 @@
                     </v-text-field>
                 </v-col>
             </v-row>
-            <v-row v-if="staff.length > 0"> 
+            <v-row v-if="staff.length != 0"> 
                 <v-col xs="12" sm="6" md="4" lg="3" v-for="person in filteredStaff" :key="person.name">
                     <v-card class="text-center ma-3">
                       <v-responsive class="pt-4">
@@ -94,8 +94,20 @@
                     </v-card>            
                 </v-col>
             </v-row>
-            <v-row v-else>
-                <h1> no employee added</h1>
+            <v-row v-else class="my-3 text-center">
+                <v-col col="12" xs="6" sm="6" md="6" lg="7" align="center">
+                    <div style="width: 250px">
+                        <v-img :src="require('@/assets/add.svg')"
+                        width="100%"
+                        style="opacity: .75"
+                        >
+                        </v-img>
+                    </div>
+                </v-col>
+                <v-col xs="6" sm="6" md="6" lg="5" align="center">
+                    <h3 class="mt-6 text-center" style="opacity: .55">Click the "+" button to add an employee</h3>
+                </v-col>
+    
             </v-row>
         </v-container>
     </div>

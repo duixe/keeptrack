@@ -53,7 +53,7 @@
             </v-row>
         </v-container-fluid>
         <v-container class="my-8">
-            <v-expansion-panels class="pa-4">
+            <v-expansion-panels class="pa-4" v-if="department.length > 0" >
                 <v-expansion-panel v-for="departments in department" :key="departments.name">
                      <v-expansion-panel-header style="font-weight: bold;">{{ departments.name }}</v-expansion-panel-header>
                     <v-expansion-panel-content class="px-4 grey--text">
@@ -114,6 +114,11 @@
                             </v-row>
                         </v-container>
                     </v-expansion-panel-content>
+                </v-expansion-panel>
+            </v-expansion-panels>
+            <v-expansion-panels v-else> 
+                <v-expansion-panel>
+                  <v-expansion-panel-header style="font-weight: bold;">click the "+" button to add Department</v-expansion-panel-header>
                 </v-expansion-panel>
             </v-expansion-panels>
         </v-container>

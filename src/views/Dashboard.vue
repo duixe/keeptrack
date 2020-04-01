@@ -52,30 +52,35 @@
                     <span>Order by Date Created</span>
                 </v-tooltip>
             </v-row>
-            <v-card flat v-for="depDetail in depDetails" :key="depDetail.name">
-                <v-row :class="`pa-3 dash-class ${depDetail.isActive}`"
-                style="margin-left: 0"
-                >
-                    <v-col xs="12" md="6">
-                        <div class="caption grey--text">Name of Department</div>
-                        <div>{{ depDetail.name}}</div>
-                    </v-col>
-                    <v-col xs="6" sm="4" md="2">
-                        <div class="caption grey--text">Total num of staff</div>
-                        <div>{{ depDetail.staffNum }}</div>
-                    </v-col>
+            <div v-if="depDetails.length > 0">
+                 <v-card flat v-for="depDetail in depDetails" :key="depDetail.name">
+                    <v-row :class="`pa-3 dash-class ${depDetail.isActive}`"
+                    style="margin-left: 0"
+                    >
+                        <v-col xs="12" md="6">
+                            <div class="caption grey--text">Name of Department</div>
+                            <div>{{ depDetail.name}}</div>
+                        </v-col>
                         <v-col xs="6" sm="4" md="2">
-                        <div class="caption grey--text">Date Created</div>
-                        <div>{{ depDetail.date }}</div>
-                    </v-col>
-                    <v-col xs="2" sm="4" md="2">
-                        <div align="right">
-                            <v-chip :class="`${depDetail.isActive} white--text caption my-2`">{{ depDetail.isActive == "true" ? 'active' : 'not active' }}</v-chip>
-                        </div>
-                    </v-col>
-                </v-row>
-                <v-divider></v-divider>
-            </v-card>
+                            <div class="caption grey--text">Total num of staff</div>
+                            <div>{{ depDetail.staffNum }}</div>
+                        </v-col>
+                            <v-col xs="6" sm="4" md="2">
+                            <div class="caption grey--text">Date Created</div>
+                            <div>{{ depDetail.date }}</div>
+                        </v-col>
+                        <v-col xs="2" sm="4" md="2">
+                            <div align="right">
+                                <v-chip :class="`${depDetail.isActive} white--text caption my-2`">{{ depDetail.isActive == "true" ? 'active' : 'not active' }}</v-chip>
+                            </div>
+                        </v-col>
+                    </v-row>
+                    <v-divider></v-divider>
+                </v-card>
+            </div>
+            <div v-else>
+                <h2>Add Departments and staff to your collection...</h2>
+            </div>
         </v-container>
     </div>
 </template>
