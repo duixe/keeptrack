@@ -191,10 +191,11 @@ export default {
                         this.department = doc.data().department
                         this.dateMenu = doc.data().date
                         
-
+              
+                        
                     }
                 })
-            })
+            })  
       },
       updateEmployee() {
         if (this.$refs.form.validate()) {
@@ -266,8 +267,14 @@ export default {
         return this.date ? format(parseISO(this.date),  'do MMM yyyy') : ''
       },
     },
+    // created() {
+    //   db.collection('departments').get().then((querySnapshot) => {
+    //     querySnapshot.forEach((doc) => this.items.push( doc.data().name ))
+    //   })
+    // }
     created() {
-      db.collection('departments').get().then((querySnapshot) => {
+      const user = fb.auth().currentUser;
+      db.collection('clients').doc(user.uid).collection('departments').get().then((querySnapshot) => {
         querySnapshot.forEach((doc) => this.items.push( doc.data().name ))
       })
     }
