@@ -40,7 +40,7 @@
       <div class="left">
         <div class="left-div">
           <h1 class="homeh1 mb-2">Cloudly Manage your Company's Data</h1>
-          <h4 class="homeh4">store and manage your organization's department and staff profile, retrieve and edit them them at your own time</h4>
+          <h4 class="homeh4">store and manage your organization's department and staff profile, retrieve and edit them at your own time</h4>
           <v-row justify="center" class="mt-4">
             <v-col md="12" lg="12">
               <v-btn 
@@ -304,6 +304,13 @@ export default {
           margin-left: 2rem;
           background: rgba(0, 0, 0, 0);
         }
+      .homeh1 {
+        font-size: 2.1rem; 
+      }
+
+      .homeh4 {
+        font-size: 1.5rem;
+      }
   }
 
   @media (max-width: 425px){
@@ -317,6 +324,13 @@ export default {
           margin-left: 2rem;
           background: rgba(0, 0, 0, 0);
         }
+      .homeh1 {
+        font-size: 2.4rem; 
+      }
+
+      .homeh4 {
+        font-size: 1.6rem;
+      }
   }
 
   @media (max-width: 1025px){
