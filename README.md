@@ -19,12 +19,13 @@ Some major skills acquired and used during the design and development of this pr
     - used firesbase Realtime database to store the application data in various documents organized into a collection
     - Practised and solved a complex NoSQL data modelling problem by setting up boundries between various sub documents belonging to a paticular document in a collection
     - Added firbase cloud storage for image upload purposes, thereby mapping each uploaded images to its corresponding document in a collection of the firbase realtime database
-    - Applied constraints (security rules) to the databse
+    - Added and used firbase authentication for identity verification
+    - Applied constraints (security rules) to the database
     - Applied the firbase password reset option in the application
     - Configured the application, making it suitable for firebase hosting
     - Finally depolyed the application to firebase
 
-## Guidlines on cloning and project setup
+## Guidlines on project setup
 
 ### clone the repo
 
@@ -59,3 +60,9 @@ npm run lint
 ### Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+## Features I would like to add in the future
+
+- Countdown to employee's retirment or contract epiring date
+- Employee's salary due date notification to employer or manager
+- Ability to rate department's performance with respect to their output
