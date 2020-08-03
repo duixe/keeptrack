@@ -63,6 +63,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## Features I would like to add in the future
 
+- Google Sign-in Integration
 - Countdown to employee's retirement or contract expiry date
 - Employee's salary due date notification to employer or manager
 - Ability to rate department's performance with respect to their output
