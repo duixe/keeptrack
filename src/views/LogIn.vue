@@ -52,12 +52,9 @@
                   <v-text-field
                     v-model="password"
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="[passRules.required, passRules.min]"
                     :type="show ? 'text' : 'password'"
                     name="input-10-1"
                     label="password"
-                    hint="At least 8 characters"
-                    counter
                     @click:append="show = !show"
                     prepend-icon="lock"
                    ></v-text-field>
